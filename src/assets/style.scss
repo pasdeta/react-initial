@@ -1,11 +1,13 @@
+@import '~react-flexview/lib/flexView.css';
+@import '~react-select/dist/react-select.css';
+
 body {
-   
+    margin: 0;
 }
 
-
-
-
-@import '~react-select/dist/react-select.css';
+div#root {
+    height: 100vh;
+}
 
 div.Select {
     div.Select-control {
@@ -34,5 +36,11 @@ div.floating-label {
     &.selected{
         transform: scale(0.75) translate(0px, -28px);
     }
+}
+
+.make-it-card {
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    border-radius: 2px;
+    padding: 20px;
 }
 

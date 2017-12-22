@@ -46,6 +46,12 @@ module.exports = {
             filename: 'index.html',
             inject: 'body'
         }),
-        new webpack.NamedModulesPlugin()
-    ]
+        new webpack.NamedModulesPlugin(),
+        new webpack.DefinePlugin({
+            __DEV__: true
+        })
+    ],
+    devServer: {
+        historyApiFallback: true,
+    }
 };

@@ -8,7 +8,7 @@ export default class AsyncSelect extends Component {
     }
 
     handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
+        this.setState({ selectedOption, floatingLabelFixed: selectedOption != null });
     }
 
     handleFocus = () => {
@@ -25,7 +25,8 @@ export default class AsyncSelect extends Component {
             <div
                 style={{
                     position: 'relative',
-                    marginTop: 40
+                    marginTop: 40,
+                    width: '100%'
                 }}
             >
                 <Select
@@ -46,7 +47,9 @@ export default class AsyncSelect extends Component {
                 />
                 <div
                     className={this.state.floatingLabelFixed ? "floating-label selected" : "floating-label"}
-                >PlaceHolder</div>
+                >
+                    {this.props.floatingLabelText}
+                </div>
             </div>
         );
     }
