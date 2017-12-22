@@ -1,46 +1,104 @@
 @import '~react-flexview/lib/flexView.css';
 @import '~react-select/dist/react-select.css';
+@import '~font-awesome/css/font-awesome.css';
 
 body {
     margin: 0;
+    background-color: #c9c9c9;
+    margin-top: 60px;
 }
 
 div#root {
     height: 100vh;
 }
 
-div.Select {
-    div.Select-control {
-        border: none;
+
+div.async-select {
+    position: relative;
+    margin-top: 40px;
+    width: 100%;
+
+    hr {
+        border-top: none rgb(0, 188, 212); 
+        border-left: none rgb(0, 188, 212); 
+        border-right: none rgb(0, 188, 212); 
+        border-bottom: 2px solid rgb(0, 188, 212); 
+        bottom: 3px; 
+        box-sizing: content-box; 
+        margin: 0px; 
+        position: absolute; 
+        width: 100%; 
+        transform: scaleX(0); 
+        transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+
+        &.selected {
+            transform: scaleX(1);
+        }
+    }
+
+    div.Select {
+
+        &.is-focused:not(.is-open) > .Select-control {
+            box-shadow: none;
+        }
+
+        div.Select-control {
+            border: none;
+        }
+
+        input {
+            font-family: Roboto, sans-serif;
+            opacity: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            background-color: rgba(0, 0, 0, 0);
+            color: rgba(0, 0, 0, 0.87);
+            width: 90%;
+        }
+
+        div.Select-value {
+            padding-left: 0px;
+        }
+    }
+    
+    div.Select-menu-outer {
+        z-index: 2;
+    }
+    
+    div.Select-input {
+        padding-left: 0px;
+    }
+
+    
+    label.floating-label {
+        position: absolute;
+        line-height: 22px;
+        top: 9px;
+        left: 0px;
+        transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        z-index: 1;
+        transform: scale(1) translate(0px, 0px);
+        transform-origin: left top 0px;
+        pointer-events: none;
+        user-select: none;
+        color: rgba(0, 0, 0, 0.3);
+        font-size: 16px;
+    
+        &.selected {
+            transform: scale(0.75) translate(0px, -28px);
+        }
+
+        &.has-focus {
+            color: rgb(0, 188, 212);
+        }
     }
 }
 
-div.Select-menu-outer {
-    z-index: 2;
-}
 
-
-div.floating-label {
-    position: absolute;
-    line-height: 22px;
-    top: 9px;
-    left: 5px;
-    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-    z-index: 1;
-    transform: scale(1) translate(0px, 0px);
-    transform-origin: left top 0px;
-    pointer-events: none;
-    user-select: none;
-    color: rgba(0, 0, 0, 0.3);
-
-    &.selected{
-        transform: scale(0.75) translate(0px, -28px);
-    }
-}
 
 .make-it-card {
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
     border-radius: 2px;
     padding: 20px;
+    background-color: #fff;
 }
 

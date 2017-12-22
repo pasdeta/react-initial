@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import FlexView from 'react-flexview';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, Fields } from 'redux-form';
 
+import DateSelect from '../../../components/DateSelect';
 import AsyncSelect from '../../../components/AsyncSelect';
+import Uploader from '../../../components/Uploader';
 
 
 class Form extends Component {
@@ -14,31 +16,73 @@ class Form extends Component {
         return (
             <FlexView grow>
                 <FlexView basis="10" />
-                <FlexView column grow className="make-it-card">
+                <FlexView basis="0" column grow className="make-it-card">
                     <Field
                         component={TextField} 
                         floatingLabelText="Floating Label Text"
                         type="text"
-                        name="firstName" 
+                        name="firstName"
                     />
                     <Field
-                        component={DatePicker} 
-                        floatingLabelText="Issue Date"
+                        component={DateSelect} 
+                        floatingLabelText="Uretim Tarihi"
                         type="text"
                         name="issueDate"
-                        autoOk
-                        container="inline" 
-                        mode="landscape"
                     />
                     <FlexView>
-                        <FlexView basis='50%'>
+                        <FlexView basis='0' grow>
+                            <Field 
+                                component={AsyncSelect}
+                                floatingLabelText="Uretim Tarihi"
+                                name="branch"
+                            />
+                        </FlexView>
+                        <FlexView basis="10" />
+                        <FlexView basis='0' grow>
+                            <Field 
+                                component={AsyncSelect}
+                                floatingLabelText="Issue Date"
+                                name="building"
+                            />
+                        </FlexView>
+                    </FlexView>
+                </FlexView>
+                <FlexView basis="10" />
+                <FlexView basis="0" column grow className="make-it-card">
+                    <FlexView>
+                        <FlexView basis='0' grow>
                             <Field 
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="brand"
                             />
                         </FlexView>
-                        <FlexView basis='50%'>
+                        <FlexView basis="10" />
+                        <FlexView basis='0' grow>
+                            <Field 
+                                component={AsyncSelect}
+                                floatingLabelText="Issue Date"
+                                name="model"
+                            />
+                        </FlexView>
+                        <FlexView basis="10" />
+                        <FlexView basis='0' grow>
+                            <Field 
+                                component={AsyncSelect}
+                                floatingLabelText="Issue Date"
+                                name="model"
+                            />
+                        </FlexView>
+                        <FlexView basis="10" />
+                        <FlexView basis='0' grow>
+                            <Field 
+                                component={AsyncSelect}
+                                floatingLabelText="Issue Date"
+                                name="model"
+                            />
+                        </FlexView>
+                        <FlexView basis="10" />
+                        <FlexView basis='0' grow>
                             <Field 
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
@@ -46,25 +90,10 @@ class Form extends Component {
                             />
                         </FlexView>
                     </FlexView>
-                </FlexView>
-                <FlexView basis="10" />
-                <FlexView column grow className="make-it-card">
-                <FlexView>
-                    <FlexView basis='50%'>
-                        <Field 
-                            component={AsyncSelect}
-                            floatingLabelText="Issue Date"
-                            name="brand"
-                        />
-                    </FlexView>
-                    <FlexView basis='50%'>
-                        <Field 
-                            component={AsyncSelect}
-                            floatingLabelText="Issue Date"
-                            name="model"
-                        />
-                    </FlexView>
-                    </FlexView>
+                    <Fields
+                        component={Uploader}
+                        names={["files", "isChanged", "changes"]}
+                    />
                 </FlexView>
                 <FlexView basis="10" />
             </FlexView>

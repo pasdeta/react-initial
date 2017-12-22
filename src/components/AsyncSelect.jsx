@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
+import className from 'classnames';
 
 export default class AsyncSelect extends Component {
     state = {
         selectedOption: null,
-        floatingLabelFixed: false
+        floatingLabelFixed: false,
+        value: null,
+        focused: false
     }
 
+    // componentWillReceiveProps(nextProps) {
+    //     let value = nextProps.input.value;
+    //     if(value == "") {
+    //         value = null;
+    //     }
+    //     this.setState({ 
+    //         value,
+    //         floatingLabelFixed: value !== null 
+    //     });
+    // }
+
     handleChange = (selectedOption) => {
+        this.props.input.onChange(selectedOption);
         this.setState({ selectedOption, floatingLabelFixed: selectedOption != null });
     }
 
     handleFocus = () => {
-        this.setState({ floatingLabelFixed: true });
+        this.props.input.onFocus();
+        this.setState({ floatingLabelFixed: true, focused: true });
     }
 
     handleBlur = () => {
-        this.setState({ floatingLabelFixed: this.state.selectedOption != null });
+        this.props.input.onBlur();
+        this.setState({ floatingLabelFixed: this.state.selectedOption != null, focused: false });
     }
 
     render() {
 
         return (
             <div
-                style={{
-                    position: 'relative',
-                    marginTop: 40,
-                    width: '100%'
-                }}
+                className="async-select"
             >
                 <Select
                     name="form-field-name"
@@ -35,6 +48,7 @@ export default class AsyncSelect extends Component {
                     onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
+                    isLoading
                     placeholder={null}
                     options={[
                         { value: 'one', label: 'One' },
@@ -45,10 +59,20 @@ export default class AsyncSelect extends Component {
                         { value: 'c', label: 'Two' },
                     ]}
                 />
-                <div
-                    className={this.state.floatingLabelFixed ? "floating-label selected" : "floating-label"}
+                <label
+                    className={className(
+                        "floating-label", 
+                        { "selected": this.state.floatingLabelFixed }, 
+                        { "has-focus": this.state.focused}
+                    )}
                 >
                     {this.props.floatingLabelText}
+                </label>
+                <div>
+                    <hr 
+                        aria-hidden="true" 
+                        className={className({ "selected": this.state.focused})}
+                        />
                 </div>
             </div>
         );
