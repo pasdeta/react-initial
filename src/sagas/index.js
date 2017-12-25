@@ -1,6 +1,8 @@
 import { take, fork, cancel } from 'redux-saga/effects';
 
-const sagas = [];
+import NavigationSaga from './navigation';
+
+const sagas = [NavigationSaga];
 
 export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 

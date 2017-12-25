@@ -6,24 +6,44 @@ import {
   Link,
   Switch
 } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+import { I18nextProvider } from 'react-i18next';
+import FlexView from 'react-flexview';
 
+import i18n from '../services/I18n';
 import Inventory from '../screens/inventory';
+import Account from '../screens/account';
 import NoMatch from '../components/NoMatch';
+import NavigationBar from '../containers/NavigationBar';
+import { history } from '../config/store';
+
 
 import '../assets/style.scss';
+
+
 
 export default class App extends React.Component {
   render() {
 
     return (
-      <MuiThemeProvider>
-        <Router>
-          <Switch>
-            <Route path='/inventories' component={Inventory}/>
-            <Route component={NoMatch} />
-          </Switch>
-        </Router>
-      </MuiThemeProvider>
+      <I18nextProvider i18n={ i18n }>
+        <MuiThemeProvider>
+          <ConnectedRouter history={history}>
+          <FlexView grow>
+              <NavigationBar />
+              <FlexView basis="10" />
+              <FlexView grow>
+                <Switch>
+                  <Route path='/inventories' component={Inventory}/>
+                  <Route path='/' component={Account} />
+                  <Route component={NoMatch} />
+                </Switch>
+              </FlexView>
+              <FlexView basis="10" />
+              </FlexView>
+          </ConnectedRouter>
+        </MuiThemeProvider>
+      </I18nextProvider>
     );
   }
 }

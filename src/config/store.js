@@ -1,11 +1,15 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
 import rootReducer from '../reducers';
 import SagaManager from '../sagas';
 
+const history = createHistory();
+
 const sagaMiddleware = createSagaMiddleware();
-let middlewareEnhancer = applyMiddleware(sagaMiddleware);
+let middlewareEnhancer = applyMiddleware(sagaMiddleware, routerMiddleware(history));
 
 if(__DEV__) {
     const DevTools = require('redux-devtools-extension').composeWithDevTools;
@@ -32,3 +36,4 @@ const configureStore = () => {
 }
 
 export default configureStore;
+export { history }

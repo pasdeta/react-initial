@@ -4,23 +4,50 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+import Delete from 'material-ui/svg-icons/action/delete';
 
 export default class Uploader extends Component {
 
-
     handleChangeFiles = (event) => {
-        console.log("handleChangeFiles", event.target.files)
-        this.props.isChanged.input.onChange(true);
+        const files = event.target.files;
+        let newFiles = this.props.files.input.value == "" ? [] : this.props.files.input.value;
+        if(files.length > 0) {
+            for(let file of files) {
+                newFiles.push(file);
+            }
+            this.props.isChanged.input.onChange(true);
+            this.props.files.input.onChange(newFiles);
+            this.forceUpdate()
+        }
+    }
+
+    humanFileSize(size) {
+        var i = Math.floor( Math.log(size) / Math.log(1024) );
+
+        return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'KB', 'MB', 'GB', 'TB'][i];
+    }
+
+    humanTotalFileSize() {
+        const { files } = this.props;
+        const filesToList = files.input.value == "" ? [] : files.input.value;
+
+        let totalSize = 0;
+        for(let file of files.input.value) {
+            totalSize = totalSize + file.size;
+        }
+
+        return this.humanFileSize(totalSize)
     }
 
     render() {
+        const { files } = this.props;
+        const filesToList = files.input.value == "" ? [] : files.input.value;
 
         return (
             <List
                 style={{
                     border: 1
-                }}
+                }}   
             >
                 <Subheader inset={true}>
                     <RaisedButton
@@ -47,19 +74,23 @@ export default class Uploader extends Component {
                             }}
                         />
                     </RaisedButton>
+                    <div>
+                            {filesToList.length} Dosya, {this.humanTotalFileSize()}
+                    </div>
                 </Subheader>
-                <ListItem
-                    leftAvatar={<Avatar icon={<FileFolder />} />}
-                    rightIcon={<ActionInfo />}
-                    primaryText="Photos"
-                    secondaryText="Jan 9, 2014"
-                />
-                <ListItem
-                    leftAvatar={<Avatar icon={<FileFolder />} />}
-                    rightIcon={<ActionInfo />}
-                    primaryText="Recipes"
-                    secondaryText="Jan 17, 2014"
-                />
+                {
+                    filesToList.map((file, index) => (
+                        <ListItem
+                            disabled
+                            key={`file${index}`}
+                            leftAvatar={<Avatar icon={<FileFolder />} />}
+                            rightIcon={<Delete />}
+                            primaryText={file.name}
+                            secondaryText={this.humanFileSize(file.size)}
+                            onClick={null}
+                        />
+                    ))
+                }
             </List>
         );
     }
