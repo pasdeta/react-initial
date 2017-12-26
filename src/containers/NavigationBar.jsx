@@ -10,14 +10,14 @@ import Language from './Language';
 
 const mapDispathToProps = dispatch => ({
     navigateTo: (url) => {
-        dispatch(Navigate(url));
+        dispatch(Navigate.GoTo(url));
     }
 });
 
 class NavigationBar extends Component {
-
+    
     render() {
-
+        
         return (
             <FlexView 
                 grow

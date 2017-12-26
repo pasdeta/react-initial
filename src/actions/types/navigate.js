@@ -1,8 +1,8 @@
 import { NavigateActions } from '../constants/navigate';
 
-const Navigate = (url) => ({
+const GoTo = (url) => ({
     type: NavigateActions.GO,
     payload: url
 });
 
-export { Navigate };
+export default { GoTo };

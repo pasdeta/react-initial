@@ -1,14 +1,10 @@
-import { connect } from 'react-redux';
 
-const withAuth = () => {
-    const mapStateToProps = state => {
-        [state.auth]
-    };
+class Authentication {
 
-    return (target) => {
-        
-        return connect(mapStateToProps, {})(target);
-    };
-};
+    
 
-export { withAuth };
+}
+
+const Auth = new Authentication();
+
+export default Auth;

@@ -1,1 +1,2 @@
-export * from './navigate';
+export * from './Navigate';
+export * from './Authentication';

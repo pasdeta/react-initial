@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FlexView from 'react-flexview';
 
 import Grid, { Column } from "../../../components/Grid";
+import Search from '../components/Search';
 
 export default class List extends Component {
 
@@ -26,9 +27,12 @@ export default class List extends Component {
     }
 
     render() {
+        const { t } = this.props;
 
         return (
-            <FlexView grow>
+            <FlexView grow column>
+                <Search />
+                <FlexView basis="10" />
                 <Grid
                     containerStyle={{
                         height: 115,

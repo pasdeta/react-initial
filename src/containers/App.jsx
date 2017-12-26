@@ -13,14 +13,12 @@ import FlexView from 'react-flexview';
 import i18n from '../services/I18n';
 import Inventory from '../screens/inventory';
 import Account from '../screens/account';
+import Dashboard from '../screens/dashboard';
 import NoMatch from '../components/NoMatch';
 import NavigationBar from '../containers/NavigationBar';
 import { history } from '../config/store';
 
-
 import '../assets/style.scss';
-
-
 
 export default class App extends React.Component {
   render() {
@@ -35,7 +33,8 @@ export default class App extends React.Component {
               <FlexView grow>
                 <Switch>
                   <Route path='/inventories' component={Inventory}/>
-                  <Route path='/' component={Account} />
+                  <Route exact path='/' component={Dashboard} />
+                  <Route exact path='/login' component={Account} />
                   <Route component={NoMatch} />
                 </Switch>
               </FlexView>

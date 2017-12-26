@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import FlexView from 'react-flexview';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 
 import Language from '../../../containers/Language';
+import LoginForm from '../components/LoginForm';
 
 export default class Login extends Component {
-
 
     render() {
 
@@ -22,7 +19,7 @@ export default class Login extends Component {
             >
                 <FlexView 
                     basis="90%"
-                    className="make-it-card no-padding"
+                    className="make-it-card no-padding login-container"
                     column
                     style={{
                         maxWidth: 300
@@ -35,31 +32,11 @@ export default class Login extends Component {
                         grow
                     >
                         Login
-                        <FlexView basis grow />
+                        <FlexView grow />
                         <Language />
                     </FlexView>
-
                     <Divider />
-                    
-                    <TextField
-                        floatingLabelText="Username"
-                    />
-                    <TextField
-                        floatingLabelText="Password"
-                        type="password"
-                    />
-                    <SelectField
-                        floatingLabelText="Ready?"
-                    >
-                        <MenuItem value={false} primaryText="No" />
-                        <MenuItem value={true} primaryText="Yes" />
-                    </SelectField>
-                    <FlexView basis="30" />
-                    <RaisedButton 
-                        label="Login" 
-                        primary={true}
-                    />
-
+                    <LoginForm />
                 </FlexView>
             </FlexView>
         );

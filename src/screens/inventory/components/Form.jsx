@@ -4,10 +4,7 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { Field, reduxForm, Fields } from 'redux-form';
 
-import DateSelect from '../../../components/DateSelect';
-import AsyncSelect from '../../../components/AsyncSelect';
-import Uploader from '../../../components/Uploader';
-
+import { Uploader, AsyncSelect, DateSelect } from '../../../components/redux-form';
 
 class Form extends Component {
 

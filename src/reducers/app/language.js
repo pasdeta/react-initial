@@ -1,13 +1,10 @@
 const initialState = {
-    presentation: {
-        
-    },
-    accessToken : null
+    current: null
 };
 
 export default (state = initialState, { type, payload }) => {
     switch(type) {
-        default: 
+        default:
             return state;
     }
 }
