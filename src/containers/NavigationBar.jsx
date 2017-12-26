@@ -8,16 +8,20 @@ import FileFolder from 'material-ui/svg-icons/file/folder';
 import { Navigate } from '../actions';
 import Language from './Language';
 
+import { auth } from '../providers/Authentication';
+import NavFlatButton from '../components/NavFlatButton';
+
 const mapDispathToProps = dispatch => ({
     navigateTo: (url) => {
         dispatch(Navigate.GoTo(url));
     }
 });
 
+@auth()
 class NavigationBar extends Component {
     
     render() {
-        
+        console.log(this.props)
         return (
             <FlexView 
                 grow
@@ -25,33 +29,33 @@ class NavigationBar extends Component {
                 basis="100%"
                 vAlignContent="center"
             >
-                <FlatButton
-                    onClick={() => { this.props.navigateTo("/"); }}
+                <NavFlatButton
+                    url="/"
                     label="AStore"
                     secondary={true}
                 />
                 <FlexView basis="20" />   
-                <FlatButton
-                    onClick={() => { this.props.navigateTo("/inventories"); }}
+                <NavFlatButton
+                    url="/inventories"
                     label="Inventories"
                     secondary={true}
                     icon={<FileFolder />}
                 />       
-                <FlatButton
-                    onClick={() => { this.props.navigateTo("/inventories/new"); }}
+                <NavFlatButton
+                    url="/inventories/new"
                     label="New Inventory"
                     secondary={true}
                     icon={<FileFolder />}
                 />
-                <FlatButton
-                    onClick={() => { this.props.navigateTo("/inventories/12"); }}
+                <NavFlatButton
+                    url="/inventories/12"
                     label="Inventory Detail"
                     secondary={true}
                     icon={<FileFolder />}
                 />  
                 <FlexView grow /> 
-                <FlatButton
-                    onClick={() => { this.props.navigateTo("/login"); }}
+                <NavFlatButton
+                    url="/login"
                     label="Login"
                     secondary={true}
                 />                 

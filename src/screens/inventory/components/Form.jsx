@@ -32,6 +32,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Uretim Tarihi"
                                 name="branch"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                         <FlexView basis="10" />
@@ -40,6 +44,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="building"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                     </FlexView>
@@ -52,6 +60,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="brand"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                         <FlexView basis="10" />
@@ -60,6 +72,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="model"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                         <FlexView basis="10" />
@@ -68,6 +84,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="model"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                         <FlexView basis="10" />
@@ -76,6 +96,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="model"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                         <FlexView basis="10" />
@@ -84,6 +108,10 @@ class Form extends Component {
                                 component={AsyncSelect}
                                 floatingLabelText="Issue Date"
                                 name="model"
+                                service={{
+                                    isLoading: false,
+                                    data: []
+                                }}
                             />
                         </FlexView>
                     </FlexView>

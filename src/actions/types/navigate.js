@@ -1,4 +1,4 @@
-import { NavigateActions } from '../constants/navigate';
+import { NavigateActions } from '../constants';
 
 const GoTo = (url) => ({
     type: NavigateActions.GO,

@@ -5,19 +5,22 @@ import MenuItem from 'material-ui/MenuItem';
 
 import 'flag-icon-css/css/flag-icon.css';
 
+import { i18n } from '../actions';
+
 
 const mapStateToProps = state => ({
     ...state.app.i18n
 });
 
+const mapDispatchToProps = dispatch => ({
+    handleChange: (language) => {
+        dispatch(i18n.ChangeLanguage(language));
+    } 
+});
+
 class Language extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {value: 1};
-    }
-
-    handleChange = (event, index, value) => this.setState({value});
+    handleChange = (event, index, value) => this.props.handleChange(value);
 
     selectionRenderer = (value, menuItem) => {
 
@@ -25,7 +28,8 @@ class Language extends Component {
     }
 
     render() {
-        console.log(this.props);
+        const { current } = this.props;
+
         return (
             <DropDownMenu
                 style={{
@@ -33,12 +37,12 @@ class Language extends Component {
                 }}
                 selectionRenderer={this.selectionRenderer}
                 onChange={this.handleChange}
-                value={this.state.value}
+                value={current}
             >
-                <MenuItem value={1}>
+                <MenuItem value={'en'}>
                     <span className="flag-icon flag-icon-us"></span>
                 </MenuItem>
-                <MenuItem value={2}>
+                <MenuItem value={'tr'}>
                     <span className="flag-icon flag-icon-tr"></span>
                 </MenuItem>
             </DropDownMenu>
@@ -46,4 +50,4 @@ class Language extends Component {
     }
 }
 
-export default connect(mapStateToProps)(Language);
+export default connect(mapStateToProps, mapDispatchToProps)(Language);

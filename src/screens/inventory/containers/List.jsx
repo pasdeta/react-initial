@@ -35,7 +35,7 @@ export default class List extends Component {
                 <FlexView basis="10" />
                 <Grid
                     containerStyle={{
-                        height: 115,
+                        height: 315,
                         width: '100%'
                     }}
                     suppressCellSelection
