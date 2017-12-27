@@ -1,10 +1,11 @@
 import { take, fork, cancel } from 'redux-saga/effects';
 
+import DataSaga from './data';
 import NavigationSaga from './navigation';
 import AuthenticationSaga from './authentication';
 import i18n from './i18n';
 
-const sagas = [NavigationSaga, AuthenticationSaga, i18n];
+const sagas = [DataSaga, NavigationSaga, AuthenticationSaga, i18n];
 
 export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 

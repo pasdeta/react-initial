@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import FileFolder from 'material-ui/svg-icons/file/folder';
+import { translate } from 'react-i18next';
 
 import { Navigate } from '../actions';
 import Language from './Language';
@@ -18,10 +19,12 @@ const mapDispathToProps = dispatch => ({
 });
 
 @auth()
+@translate()
 class NavigationBar extends Component {
     
     render() {
-        console.log(this.props)
+        const { t } = this.props;
+
         return (
             <FlexView 
                 grow
@@ -37,13 +40,13 @@ class NavigationBar extends Component {
                 <FlexView basis="20" />   
                 <NavFlatButton
                     url="/inventories"
-                    label="Inventories"
+                    label={t('MENU.SEARCHINVENTORY')}
                     secondary={true}
                     icon={<FileFolder />}
                 />       
                 <NavFlatButton
                     url="/inventories/new"
-                    label="New Inventory"
+                    label={t('MENU.NEWINVENTORY')}
                     secondary={true}
                     icon={<FileFolder />}
                 />
@@ -59,7 +62,10 @@ class NavigationBar extends Component {
                     label="Login"
                     secondary={true}
                 />                 
-                <FlatButton label="Logout" secondary={true} />
+                <FlatButton 
+                    label={t('MENU.LOGOUT')} 
+                    secondary={true} 
+                />
                 <Language />
             </FlexView>
         );

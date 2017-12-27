@@ -6,7 +6,6 @@ import MenuItem from 'material-ui/MenuItem';
 export default (props) => {
     const { floatingLabelText, touched, error, input } = props;
 
-    console.log(props)
     return (
         <SelectField
             floatingLabelText={floatingLabelText}

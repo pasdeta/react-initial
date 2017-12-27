@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import FlexView from 'react-flexview';
 import { Field, reduxForm, Fields, SubmissionError } from 'redux-form';
 import RaisedButton from 'material-ui/RaisedButton';
 import { translate } from 'react-i18next';
 
 import i18n from '../../../services/I18n';
-import { Authenticate } from '../../../actions';
+import { Authenticate, Data } from '../../../actions';
+
 import { InputField, SelectField, SelectOption, AsyncSelect } from '../../../components/redux-form';
+
+
+const mapStateToProps = state => ({
+    organizations: state.data.organizations
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchOrganizations: () => {
+        dispatch(Data.Organization.Fetch());
+    }
+});
+
 
 @translate()
 class LoginForm extends Component {
+    static propTypes = {
+        onSubmit: PropTypes.func.isRequired
+    }
 
-    handleSubmit = (data) => {
-        this.props.dispatch(Authenticate.Login(data));
+    componentDidMount() {
+        this.props.fetchOrganizations();
     }
 
     render() {
-        const { valid, submitting, handleSubmit, t } = this.props;
-
+        const { valid, submitting, handleSubmit, t, organizations, onSubmit } = this.props;
         return (
-            <form onSubmit={handleSubmit(this.handleSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <FlexView column>
                     <Field 
                         component={InputField}
@@ -38,10 +55,11 @@ class LoginForm extends Component {
                         component={AsyncSelect}
                         floatingLabelText={t('ORGANIZATION')}
                         name="organization_id"
-                        service={{
-                            isLoading: false,
-                            data: [{ label: "Selam", value: 1}]
-                        }}
+                        service={organizations}
+                        labelExtractor={(data) => data.name}
+                        valueSelector={(item) => item.id}
+                        clearable={false}
+                        searchable={false}
                     />
                     <RaisedButton 
                         label={t('LOGINBUTTON')} 
@@ -67,17 +85,19 @@ const validate = values => {
     }
 
     if(!values.password) {
-        errors.password = i18n.t('VALIDATIONS.REQUIRED');;
+        errors.password = i18n.t('VALIDATIONS.REQUIRED');
     }
 
     if(!values.organization_id || !Number.isInteger(values.organization_id)) {
-        errors.organization_id = i18n.t('VALIDATIONS.REQUIRED');;
+        errors.organization_id = i18n.t('VALIDATIONS.REQUIRED');
     }
 
     return errors;
 };
 
+let storeConnect = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+
 export default reduxForm({
     form: 'loginForm',
     validate
-})(LoginForm);
+})(storeConnect);

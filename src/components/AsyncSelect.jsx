@@ -4,30 +4,46 @@ import Select from 'react-select';
 import MenuItem from 'material-ui/MenuItem';
 import className from 'classnames';
 
-import AsyncSelectField from '../AsyncSelect';
+class AsyncSelectOptionField extends Component {
+
+    render() {
+        
+        return (
+            <MenuItem 
+                onClick={(e) => { this.props.onSelect(this.props.option, e); }}
+                primaryText={this.props.option.name}
+            />
+        );
+    }
+}
 
 export default class AsyncSelect extends Component {
 
     static propTypes = {
-        input: PropTypes.object.isRequired,
-        floatingLabelText: PropTypes.string.isRequired,
+        name: PropTypes.string,
         service: PropTypes.shape({
             isLoading: PropTypes.bool.isRequired,
             data: PropTypes.array
         }).isRequired,
-        labelKey: PropTypes.string,
+        floatingLabelText: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
+        onFocus: PropTypes.func,
+        onBlur: PropTypes.func,
         valueSelector: PropTypes.func,
         searchable: PropTypes.bool,
         clearable: PropTypes.bool,
+        error: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
         disabled: PropTypes.bool
     }
 
     static defaultProps = {
-        labelKey: "label",
         valueSelector: (option) => option,
         searchable: true,
         clearable: true,
-        disabled: false
+        disabled: false,
+        onBlur: () => {},
+        onFocus: () => {},
+        error: false
     }
 
     state = {
@@ -36,39 +52,61 @@ export default class AsyncSelect extends Component {
         focused: false
     }
 
-    render() {
-        const { 
-            input: { name, onChange, onFocus, onBlur }, 
-            meta: { error, touched, submitting },
-            service, floatingLabelText, valueSelector, disabled
-        } = this.props;
+    // componentWillReceiveProps(nextProps) {
+    //     let value = nextProps.input.value;
+    //     if(value == "") {
+    //         value = null;
+    //     }
+    //     this.setState({ 
+    //         value,
+    //         floatingLabelFixed: value !== null 
+    //     });
+    // }
 
-        return (
-            <AsyncSelectField 
-                name={name}
-                service={service}
-                floatingLabelText={floatingLabelText}
-                onChange={onChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                error={touched && error}
-                valueSelector={valueSelector}
-                disabled={disabled || submitting}
-            />
-        );
+    getValue = (option) => {
+        if(!option) { 
+            return null;
+        }
+        
+        return this.props.valueSelector(option)
     }
 
+    handleChange = (selectedOption) => {
+        this.props.onChange(this.getValue(selectedOption));
+        this.setState({ selectedOption, floatingLabelFixed: selectedOption != null });
+    }
 
-    render2() {
-        const { name, service, disabled, meta: { touched, error, submitting } } = this.props;
-        const isDisabled = disabled || submitting;
+    handleFocus = () => {
+        this.props.onFocus();
+        this.setState({ floatingLabelFixed: true, focused: true });
+    }
+
+    handleBlur = () => {
+        this.props.onBlur();
+        this.setState({ floatingLabelFixed: this.state.selectedOption != null, focused: false });
+    }
+
+    renderOption = (option) => {
+
+        return (<MenuItem 
+                primaryText={option.name}
+            />)
+    }
+
+    renderValue = (option) => {
+
+        return option.name;
+    }
+
+    render() {
+        const { name, service, disabled, floatingLabelText, error } = this.props;
 
         return (
             <div
                 className={
                     className(
                         "async-select",
-                        { "disabled": isDisabled }
+                        { "disabled": disabled }
                     )
                 }
             >
@@ -80,7 +118,7 @@ export default class AsyncSelect extends Component {
                     onBlur={this.handleBlur}
                     isLoading={service.isLoading}
                     placeholder={null}
-                    disabled={service.isLoading || isDisabled}
+                    disabled={service.isLoading || disabled}
                     optionComponent={AsyncSelectOptionField}
                     valueRenderer={this.renderValue}
                     options={service.data}
@@ -93,17 +131,17 @@ export default class AsyncSelect extends Component {
                         "floating-label", 
                         { "selected": this.state.floatingLabelFixed }, 
                         { "has-focus": this.state.focused },
-                        { "has-error": (touched && error) }
+                        { "has-error": error }
                     )}
                 >
-                    {this.props.floatingLabelText}
+                    {floatingLabelText}
                 </label>
                 <div>
                     <hr 
                         aria-hidden="true"
                         className={
                             className(
-                                { "disabled": isDisabled }
+                                { "disabled": disabled }
                             )
                         }
                         />
@@ -113,7 +151,7 @@ export default class AsyncSelect extends Component {
                             className(
                                 "focused", 
                                 { "selected": this.state.focused }, 
-                                { "has-error": (touched && error) }
+                                { "has-error": error }
                             )
                         }
                         />
@@ -122,7 +160,7 @@ export default class AsyncSelect extends Component {
                     className={
                         className(
                             "error",
-                            { "hidden": !(touched && error) }
+                            { "hidden": !(error) }
                         )
                     }
                 >
