@@ -13,6 +13,7 @@ export default class Search extends Component {
 
         return (
             <FlexView 
+                grow
                 className="make-it-card"
                 vAlignContent="center"
             >

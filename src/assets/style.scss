@@ -15,8 +15,9 @@ body {
 
 div#root {
     height: 100vh;
-    margin-top: 65px;
     overflow: auto;
+    display: flex;
+    flex: 1;
 }
 
 .make-it-card {
@@ -24,6 +25,14 @@ div#root {
     border-radius: 2px;
     padding: 20px;
     background-color: #fff;
+
+    &.animatable {
+        transition: all 200ms;
+    }
+}
+
+.no-padding {
+    padding: 0;
 }
 
 .full-height {

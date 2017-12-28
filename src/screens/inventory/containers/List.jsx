@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import FlexView from 'react-flexview';
-import { translate } from 'react-i18next';
+
 
 import Request from '../../../services/Request';
-import Grid, { Column } from "../../../components/Grid";
-import Search from '../components/Search';
 
-@translate()
+import InventoriesGrid from '../components/InventoriesGrid';
+import Search from '../components/Search';
+import Operations from '../components/Operations';
+
+
 export default class List extends Component {
 
     constructor(props) {
@@ -22,43 +24,22 @@ export default class List extends Component {
         this.setState({ inventories: response.data });
     }
 
-    componentDidUpdate() {
-        this.grid.gridApi.refreshHeader();
-    }
-
-
-    onGridReady = (grid) => {
-        this.grid = grid;
-        grid.gridApi.sizeColumnsToFit();
-    }
-
     render() {
         const { t } = this.props;
 
         return (
             <FlexView grow column>
-                <Search />
+                <FlexView basis="90">
+                    <Search />
+                </FlexView>
                 <FlexView basis="10" />
-                <Grid
-                    containerStyle={{
-                        height: 315,
-                        width: '100%'
-                    }}
-                    suppressCellSelection
-                    rowData={this.state.inventories}
-                    isLoading={false}
-                    onReady={this.onGridReady}
-                >
-                    <Column 
-                        field="name"
-                        minWidth="100" 
-                        headerName={t('INVENTORYGRID.NAME')}
-                    />
-                    <Column 
-                        field="code"
-                        headerName={t('INVENTORYGRID.CODE')}
-                    />
-                </Grid>
+                <FlexView grow>
+                    <InventoriesGrid data={this.state.inventories} />
+                </FlexView>
+                <FlexView basis="10" />
+                <FlexView basis="80">
+                    <Operations />
+                </FlexView>
             </FlexView>
         );
     }

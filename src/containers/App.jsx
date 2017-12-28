@@ -28,16 +28,20 @@ export default class App extends React.Component {
       <I18nextProvider i18n={ i18n }>
         <MuiThemeProvider>
           <ConnectedRouter history={history}>
-            <FlexView grow>
-              <NavigationBar test />
-              <FlexView basis="10" />
+            <FlexView grow column>
+              <FlexView basis="65" />
               <FlexView grow>
-                <Switch>
-                  <Route path='/inventories' component={Inventory}/>
-                  <Route exact path='/' component={Dashboard} />
-                  <Route exact path='/login' component={Account} />
-                  <Route component={NoMatch} />
-                </Switch>
+                <NavigationBar test />
+                <FlexView basis="10" />
+                <FlexView grow>
+                  <Switch>
+                    <Route path='/inventories' component={Inventory}/>
+                    <Route exact path='/' component={Dashboard} />
+                    <Route exact path='/login' component={Account} />
+                    <Route component={NoMatch} />
+                  </Switch>
+                </FlexView>
+                <FlexView basis="10" />
               </FlexView>
               <FlexView basis="10" />
             </FlexView>

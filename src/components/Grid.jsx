@@ -1,21 +1,7 @@
 import React, { Component } from 'react';
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 
-
-export class Column extends Component {
-
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps.headerName);
-    }
-
-    render() {
-        console.log("render column")
-        return (
-            <AgGridColumn {...this.props} />
-        );
-    }
-
-}
+export { AgGridColumn as Column };
 
 export default class Grid extends Component {
 
@@ -27,18 +13,41 @@ export default class Grid extends Component {
             else if(this.props.isLoading && !nextProps.isLoading) {
                 this.gridApi.hideLoadingOverlay();
             }
-
-
-            if(this.props.children[0].props.headerName != nextProps.children[0].props.headerName) {
-                let field = nextProps.children[0].props.field;
-                let column = this.gridColumnApi.getColumn(field);
-                console.log("column", column)
-                column.colDef.headerName=nextProps.children[0].props.headerName;
+            if(this.shouldRefreshHeaderForNextProps(nextProps)) {
                 this.gridApi.refreshHeader();
             }
-
-        }  
+        }
     }
+
+    getColumnHeaderName(field) {
+        let column = this.gridColumnApi.getColumn(field);
+        if(!column) {
+
+            return column.colDef.headerName;
+        }
+
+        return null;
+    }
+    shouldRefreshHeaderForNextProps(nextProps) {
+        let shouldRefresh = false;
+        let columns = nextProps.children;
+        for(let { props: { field: fieldId, colId, headerName } } of columns) {
+            let id = fieldId || colId;
+            if(this.getColumnHeaderName(id) !== headerName) {
+                this.changeHeaderForField(id, headerName);
+                shouldRefresh = true;
+            } 
+        }
+
+        return shouldRefresh;
+    }
+    changeHeaderForField(field, newHeader) {
+        let column = this.gridColumnApi.getColumn(field);
+        if(column != null) {
+            column.colDef.headerName = newHeader;
+        }
+    }
+
 
     autoSizeAll = () => {
         let allColumnIds = [];
@@ -59,12 +68,24 @@ export default class Grid extends Component {
         if(this.props.onReady) {
             this.props.onReady(this); 
         }
+
+        this.gridApi.addGlobalListener(
+            (event) => {
+                if(event === 'gridSizeChanged' || event === 'rowDataChanged') {
+                    this.gridApi.checkGridSize();
+                    this.autoSizeAll();
+                }
+            }
+        );
+        //this.autoSizeAll();
     }
 
     render() {
 
         return (
-            <div style={this.props.containerStyle} className="ag-theme-material">
+            <div style={{
+                width: '100%'
+            }} className="ag-theme-material make-it-card no-padding">
                 <AgGridReact 
                     {...this.props}
                     onGridReady={this.onGridReady}

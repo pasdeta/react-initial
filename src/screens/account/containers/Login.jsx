@@ -56,7 +56,7 @@ class Login extends Component {
             >
                 <FlexView 
                     basis="90%"
-                    className="make-it-card no-padding login-container"
+                    className="make-it-card login-container"
                     column
                     style={{
                         maxWidth: 300
