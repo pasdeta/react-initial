@@ -1,0 +1,9 @@
+{
+  "name": "FakeServer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "json-server": "^0.12.1"
+  }
+}

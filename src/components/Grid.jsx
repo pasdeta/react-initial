@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
 
+
+export class Column extends Component {
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps.headerName);
+    }
+
+    render() {
+        console.log("render column")
+        return (
+            <AgGridColumn {...this.props} />
+        );
+    }
+
+}
+
 export default class Grid extends Component {
 
     componentWillReceiveProps(nextProps) {
@@ -11,7 +27,17 @@ export default class Grid extends Component {
             else if(this.props.isLoading && !nextProps.isLoading) {
                 this.gridApi.hideLoadingOverlay();
             }
-        }   
+
+
+            if(this.props.children[0].props.headerName != nextProps.children[0].props.headerName) {
+                let field = nextProps.children[0].props.field;
+                let column = this.gridColumnApi.getColumn(field);
+                console.log("column", column)
+                column.colDef.headerName=nextProps.children[0].props.headerName;
+                this.gridApi.refreshHeader();
+            }
+
+        }  
     }
 
     autoSizeAll = () => {
@@ -48,8 +74,4 @@ export default class Grid extends Component {
             </div>
         );
     }
-}
-
-export {
-    AgGridColumn as Column
 }

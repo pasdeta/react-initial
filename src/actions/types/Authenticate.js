@@ -1,8 +1,8 @@
 import { AuthenticationActions } from '../constants';
 
-const Login = (data) => ({
+const Login = (data, department) => ({
     type: AuthenticationActions.Login,
-    payload: data
+    payload: { data, department }
 });
 
 export default { Login };

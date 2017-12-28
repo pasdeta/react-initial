@@ -40,7 +40,8 @@ export default class AsyncSelect extends Component {
         const { 
             input: { name, onChange, onFocus, onBlur }, 
             meta: { error, touched, submitting },
-            service, floatingLabelText, valueSelector, disabled
+            service, floatingLabelText, valueSelector, disabled,
+            searchable
         } = this.props;
 
         return (
@@ -54,6 +55,7 @@ export default class AsyncSelect extends Component {
                 error={touched && error}
                 valueSelector={valueSelector}
                 disabled={disabled || submitting}
+                searchable={searchable}
             />
         );
     }

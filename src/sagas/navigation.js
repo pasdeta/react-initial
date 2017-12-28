@@ -1,10 +1,10 @@
 import { put, takeEvery, all } from 'redux-saga/effects';
-import { push } from 'react-router-redux';
 
+import Navigate from './utilities/navigate';
 import { NavigateActions } from '../actions/constants';
 
 function *changeRoute({ type, payload: url }) {
-    yield put(push(url));
+    yield Navigate.to(url);
 }
 
 function *rootSaga() {

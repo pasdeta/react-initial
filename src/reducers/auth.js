@@ -1,4 +1,9 @@
+import update from 'immutability-helper';
+
+import { AuthenticationNotifier } from '../actions/constants';
+
 const initialState = {
+    loggedIn: false,
     token: null,
     user: null,
     permissions: null,
@@ -9,6 +14,12 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
     switch(type) {
+        case AuthenticationNotifier.SET_LOGGED_IN_STATE:
+            return update(state, {
+                loggedIn: {
+                    $set: true
+                }
+            });
         default: 
             return state;
     }

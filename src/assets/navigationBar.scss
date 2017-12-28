@@ -7,7 +7,7 @@
 
     color: rgba(0, 0, 0, 0.87);
     background-color: white;
-    transition: all 1000ms ease-out;
+    transition: all 500ms ease-out;
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -21,7 +21,7 @@
 
     &.hide {
         transform: translateY(-599px);
-        transition: all 1000ms ease-in;
+        transition: all 500ms ease-in;
     }
 }
 

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import FlexView from 'react-flexview';
 import Divider from 'material-ui/Divider';
 
+import { Authenticate } from '../../../actions';
 import Request from '../../../services/Request';
 import Language from '../../../containers/Language';
 import LoginForm from '../components/LoginForm';
@@ -12,24 +14,34 @@ const LoginState = {
     CHOOSE_DEPARTMENT: 2
 };
 
+const mapDispatchToProps = dispatch => ({
+    login: (data, department) => {
+        dispatch(Authenticate.Login(data, department));
+    }
+});
 
-export default class Login extends Component {
+class Login extends Component {
     state = {
         mode: LoginState.LOGIN_FORM
     }
 
     onLoginFormSubmit = async (data) => {
-        console.log("onLoginFormSubmit", data)
-        
         try {
             let result = await Request.post('/login', data);
             if(result.departments.length > 1) {
                 this.setState({ mode: LoginState.CHOOSE_DEPARTMENT, authInfo: result });
             }
+            else {
+                this.setState({ authInfo: result }, () => { this.onDepartmentChoosed(result.departments[0]); })
+            }
         }
         catch(e) {
-
+            console.log("error", e);
         }
+    }
+
+    onDepartmentChoosed = (department) => {
+        this.props.login(this.state.authInfo, department);
     }
 
     render() {
@@ -61,10 +73,19 @@ export default class Login extends Component {
                         <Language />
                     </FlexView>
                     <Divider />
-                    {mode == LoginState.CHOOSE_DEPARTMENT && <ChooseDeparment departments={this.state.authInfo.departments} />}
+                    {   
+                        mode == LoginState.CHOOSE_DEPARTMENT && 
+                        <ChooseDeparment 
+                            departments={this.state.authInfo.departments} 
+                            onChoosed={this.onDepartmentChoosed}
+                        />
+                    }
                     {mode == LoginState.LOGIN_FORM && <LoginForm onSubmit={this.onLoginFormSubmit} />}
                 </FlexView>
             </FlexView>
         );
     }
 } 
+
+
+export default connect(null, mapDispatchToProps)(Login);

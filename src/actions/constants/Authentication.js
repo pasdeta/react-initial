@@ -3,4 +3,9 @@ const AuthenticationActions = {
     Logout: "AuthenticationActions/Logout",
 };
 
-export { AuthenticationActions };
+const AuthenticationNotifier = {
+    SET_LOGGED_IN_STATE: 'AuthenticationNotifier/SetLoggedInState',
+    SET_USER: 'AuthenticationNotifier/SetUser'
+};
+
+export { AuthenticationActions, AuthenticationNotifier };

@@ -20,33 +20,29 @@ import { history } from '../config/store';
 
 import '../assets/style.scss';
 
-import { AuthenticationProvider } from '../providers/Authentication';
-
 export default class App extends React.Component {
 
   render() {
 
     return (
       <I18nextProvider i18n={ i18n }>
-        <AuthenticationProvider>
-          <MuiThemeProvider>
-            <ConnectedRouter history={history}>
+        <MuiThemeProvider>
+          <ConnectedRouter history={history}>
+            <FlexView grow>
+              <NavigationBar test />
+              <FlexView basis="10" />
               <FlexView grow>
-                <NavigationBar test />
-                <FlexView basis="10" />
-                <FlexView grow>
-                  <Switch>
-                    <Route path='/inventories' component={Inventory}/>
-                    <Route exact path='/' component={Dashboard} />
-                    <Route exact path='/login' component={Account} />
-                    <Route component={NoMatch} />
-                  </Switch>
-                </FlexView>
-                <FlexView basis="10" />
+                <Switch>
+                  <Route path='/inventories' component={Inventory}/>
+                  <Route exact path='/' component={Dashboard} />
+                  <Route exact path='/login' component={Account} />
+                  <Route component={NoMatch} />
+                </Switch>
               </FlexView>
-            </ConnectedRouter>
-          </MuiThemeProvider>
-        </AuthenticationProvider>
+              <FlexView basis="10" />
+            </FlexView>
+          </ConnectedRouter>
+        </MuiThemeProvider>
       </I18nextProvider>
     );
   }

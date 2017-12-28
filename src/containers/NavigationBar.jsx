@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import { translate } from 'react-i18next';
+import className from 'classnames';
 
 import { Navigate } from '../actions';
 import Language from './Language';
@@ -23,12 +24,15 @@ const mapDispathToProps = dispatch => ({
 class NavigationBar extends Component {
     
     render() {
-        const { t } = this.props;
-
+        const { t, auth } = this.props;
+        console.log("NavigationBar", auth)
         return (
             <FlexView 
                 grow
-                className="navigation-bar"
+                className={className(
+                    "navigation-bar",
+                    { "hide": !auth.loggedIn }
+                )}
                 basis="100%"
                 vAlignContent="center"
             >
