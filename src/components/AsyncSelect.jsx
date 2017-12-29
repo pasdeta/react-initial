@@ -33,7 +33,8 @@ export default class AsyncSelect extends Component {
         searchable: PropTypes.bool,
         clearable: PropTypes.bool,
         error: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
-        disabled: PropTypes.bool
+        disabled: PropTypes.bool,
+        value: PropTypes.any
     }
 
     static defaultProps = {
@@ -43,7 +44,8 @@ export default class AsyncSelect extends Component {
         disabled: false,
         onBlur: () => {},
         onFocus: () => {},
-        error: false
+        error: false,
+        value: null
     }
 
     state = {
@@ -52,16 +54,22 @@ export default class AsyncSelect extends Component {
         focused: false
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     let value = nextProps.input.value;
-    //     if(value == "") {
-    //         value = null;
-    //     }
-    //     this.setState({ 
-    //         value,
-    //         floatingLabelFixed: value !== null 
-    //     });
-    // }
+    componentWillReceiveProps(nextProps) {
+        if(
+            this.props.value != nextProps.value ||
+            (
+                this.props.service.isLoading && 
+                !nextProps.service.isLoading &&
+                nextProps.value
+            )
+        ) {
+            let option = nextProps.service.data.find(d => nextProps.valueSelector(d) == nextProps.value);
+            this.setState({
+                selectedOption: option,
+                floatingLabelFixed: option != null
+            })
+        }
+    }
 
     getValue = (option) => {
         if(!option) { 
@@ -73,7 +81,7 @@ export default class AsyncSelect extends Component {
 
     handleChange = (selectedOption) => {
         this.props.onChange(this.getValue(selectedOption));
-        this.setState({ selectedOption, floatingLabelFixed: selectedOption != null });
+        this.setState({ floatingLabelFixed: selectedOption != null });
     }
 
     handleFocus = () => {
@@ -88,9 +96,11 @@ export default class AsyncSelect extends Component {
 
     renderOption = (option) => {
 
-        return (<MenuItem 
+        return (
+            <MenuItem 
                 primaryText={option.name}
-            />)
+            />
+        );
     }
 
     renderValue = (option) => {
@@ -99,7 +109,12 @@ export default class AsyncSelect extends Component {
     }
 
     render() {
-        const { name, service, disabled, floatingLabelText, error } = this.props;
+        const { 
+            name, service, disabled, floatingLabelText, error,
+            searchable, clearable, value
+        } = this.props;
+
+        const { selectedOption } = this.state;
 
         return (
             <div
@@ -112,7 +127,6 @@ export default class AsyncSelect extends Component {
             >
                 <Select
                     name="form-field-name"
-                    value={this.state.selectedOption ? this.state.selectedOption.value : null}
                     onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
@@ -122,9 +136,9 @@ export default class AsyncSelect extends Component {
                     optionComponent={AsyncSelectOptionField}
                     valueRenderer={this.renderValue}
                     options={service.data}
-                    value={this.state.selectedOption}
-                    searchable={this.props.searchable}
-                    clearable={this.props.clearable}
+                    value={selectedOption}
+                    searchable={searchable}
+                    clearable={clearable}
                 />
                 <label
                     className={className(

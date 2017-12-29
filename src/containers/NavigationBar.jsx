@@ -25,7 +25,7 @@ class NavigationBar extends Component {
     
     render() {
         const { t, auth } = this.props;
-        console.log("NavigationBar", auth)
+        
         return (
             <FlexView 
                 grow

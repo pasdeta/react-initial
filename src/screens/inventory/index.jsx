@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import List from './containers/List';
-import Form from './components/Form';
+import Form from './components/form';
 import InventoryDetail from './containers/Detail';
 
 class Inventory extends Component {

@@ -73,6 +73,42 @@ server.post('/api/inventory', (req, res) => {
 });
 
 
-server.listen(8081, () => {
+
+server.get('/api/branches', (req, res) => {
+  res.json({  
+    "data":[  
+       {  
+          "id":"60",
+          "name":"Acıbadem Hst. Kocaeli"
+       },
+       {  
+          "id":"71",
+          "name":"Acıbadem Hst. Taksim"
+       }
+    ],
+    "errors":null,
+    "success":true,
+    "extras":null
+ })
+});
+
+server.get('/api/buildings', (req, res) => {
+  res.json({  
+    "data":[  
+       {  
+          "id":2,
+          "name":"MERKEZ",
+          "branch_id":"60"
+       }
+    ],
+    "errors":null,
+    "success":true,
+    "extras":null
+ });
+});
+
+
+
+server.listen(8090, () => {
   console.log('JSON Server is running')
 })
