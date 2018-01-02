@@ -63,7 +63,9 @@ export default class AsyncSelect extends Component {
                 nextProps.value
             )
         ) {
+            
             let option = nextProps.service.data.find(d => nextProps.valueSelector(d) == nextProps.value);
+            console.log("nextProps.value",nextProps.value, nextProps.service.data, option);
             this.setState({
                 selectedOption: option,
                 floatingLabelFixed: option != null

@@ -12,7 +12,6 @@ class Form extends Component {
         
         return (
             <FlexView grow>
-                <FlexView basis="10" />
                 <FlexView basis="0" column grow className="make-it-card">
                     <Field
                         component={TextField} 
@@ -57,7 +56,8 @@ class Form extends Component {
                     <FlexView>  
                         <LocationPicker 
                             values={{
-                                branchId: "60"
+                                branchId: "60",
+                                buildingId: 2
                             }}
                         />
                     </FlexView>
@@ -66,7 +66,6 @@ class Form extends Component {
                         names={["files", "isChanged", "changes"]}
                     />
                 </FlexView>
-                <FlexView basis="10" />
             </FlexView>
         );
     }

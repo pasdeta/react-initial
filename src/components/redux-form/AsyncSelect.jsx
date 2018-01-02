@@ -38,7 +38,7 @@ export default class AsyncSelect extends Component {
 
     render() {
         const { 
-            input: { name, onChange, onFocus, onBlur }, 
+            input: { name, onChange, onFocus, onBlur, value }, 
             meta: { error, touched, submitting },
             service, floatingLabelText, valueSelector, disabled,
             searchable
@@ -56,81 +56,8 @@ export default class AsyncSelect extends Component {
                 valueSelector={valueSelector}
                 disabled={disabled || submitting}
                 searchable={searchable}
+                value={value}
             />
-        );
-    }
-
-
-    render2() {
-        const { name, service, disabled, meta: { touched, error, submitting } } = this.props;
-        const isDisabled = disabled || submitting;
-
-        return (
-            <div
-                className={
-                    className(
-                        "async-select",
-                        { "disabled": isDisabled }
-                    )
-                }
-            >
-                <Select
-                    name="form-field-name"
-                    value={this.state.selectedOption ? this.state.selectedOption.value : null}
-                    onChange={this.handleChange}
-                    onFocus={this.handleFocus}
-                    onBlur={this.handleBlur}
-                    isLoading={service.isLoading}
-                    placeholder={null}
-                    disabled={service.isLoading || isDisabled}
-                    optionComponent={AsyncSelectOptionField}
-                    valueRenderer={this.renderValue}
-                    options={service.data}
-                    value={this.state.selectedOption}
-                    searchable={this.props.searchable}
-                    clearable={this.props.clearable}
-                />
-                <label
-                    className={className(
-                        "floating-label", 
-                        { "selected": this.state.floatingLabelFixed }, 
-                        { "has-focus": this.state.focused },
-                        { "has-error": (touched && error) }
-                    )}
-                >
-                    {this.props.floatingLabelText}
-                </label>
-                <div>
-                    <hr 
-                        aria-hidden="true"
-                        className={
-                            className(
-                                { "disabled": isDisabled }
-                            )
-                        }
-                        />
-                    <hr 
-                        aria-hidden="true" 
-                        className={
-                            className(
-                                "focused", 
-                                { "selected": this.state.focused }, 
-                                { "has-error": (touched && error) }
-                            )
-                        }
-                        />
-                </div>
-                <div 
-                    className={
-                        className(
-                            "error",
-                            { "hidden": !(touched && error) }
-                        )
-                    }
-                >
-                    {error}
-                </div>
-            </div>
         );
     }
 }

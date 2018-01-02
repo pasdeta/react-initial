@@ -24,7 +24,7 @@ const mapDispathToProps = dispatch => ({
 class NavigationBar extends Component {
     
     render() {
-        const { t, auth } = this.props;
+        const { t, auth, logout } = this.props;
         
         return (
             <FlexView 
@@ -60,15 +60,11 @@ class NavigationBar extends Component {
                     secondary={true}
                     icon={<FileFolder />}
                 />  
-                <FlexView grow /> 
-                <NavFlatButton
-                    url="/login"
-                    label="Login"
-                    secondary={true}
-                />                 
+                <FlexView grow />         
                 <FlatButton 
                     label={t('MENU.LOGOUT')} 
                     secondary={true} 
+                    onClick={logout}
                 />
                 <Language />
             </FlexView>

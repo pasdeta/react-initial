@@ -28,11 +28,14 @@ function *login({ type, payload: { data, department } }) {
 function *logout() {
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('department');
+    yield put({ type: AuthenticationNotifier.SET_LOGGED_OUT_STATE });
+    yield Navigate.to('/login');
 }
 
 function *rootSaga() {
     yield call(checkAuthentication);
     yield takeEvery(AuthenticationActions.Login, login);
+    yield takeEvery(AuthenticationActions.Logout, logout);
 }
 
 export default rootSaga;

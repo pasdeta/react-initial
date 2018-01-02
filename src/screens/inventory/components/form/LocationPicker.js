@@ -37,11 +37,19 @@ export default class LocationPicker extends Component {
                 data: []
             },
             buildings: {
-                isLoading: false,
+                isLoading: true,
                 data: []
             },
             floors: {
-                isLoading: false,
+                isLoading: true,
+                data: []
+            },
+            stations: {
+                isLoading: true,
+                data: []
+            },
+            locations: {
+                isLoading: true,
                 data: []
             }
         };
@@ -50,9 +58,10 @@ export default class LocationPicker extends Component {
 
     async componentDidMount() {
         const { values } = this.props;
+
         this.setState({ values });
         let response = await Request.get('/branches');
-        this.setState({
+        await this.setState({
             branches: {
                 isLoading: false,
                 data: response
@@ -60,7 +69,8 @@ export default class LocationPicker extends Component {
         });
         if(values.branchId != null) {
             response = await Request.get('/buildings', { branch_id: values.branchId });
-            this.setState({
+            console.log("response", response)
+            await this.setState({
                 buildings: {
                     isLoading: false,
                     data: response
@@ -70,7 +80,7 @@ export default class LocationPicker extends Component {
     }
 
     updateValue(key, value, ...clearKeys) {
-        console.log(clearKeys);
+        console.log("update", key);
         let originalKey = {
             [key]: {
                 $set: value
@@ -93,8 +103,8 @@ export default class LocationPicker extends Component {
 
     render() {
         const { t } = this.props;
-        const { branches, buildings, floors, values } = this.state;
-        console.log(this.state.values);
+        const { branches, buildings, floors, stations, locations, values } = this.state;
+        console.log("render building", buildings)
         return (
             <FlexView grow>
                 <FlexView grow>
@@ -128,29 +138,28 @@ export default class LocationPicker extends Component {
                         value={values.floorId}
                         onChange={(c) => this.updateValue("floorId", c, "stationId", "locationId")}
                         valueSelector={floor => floor.id}
+                        disabled={values.buildingId == null}
                     />
                 </FlexView>
                 <FlexView basis="10" />
                 <FlexView grow>
                     <AsyncSelect 
                         floatingLabelText={t('INVENTORYGRID.STATION')}
-                        name="station"
-                        service={{
-                            isLoading: true,
-                            data: []
-                        }}
-                        onChange={() => {}}
+                        name="station_id"
+                        service={stations}
+                        onChange={(c) => this.updateValue("stationId", c, "locationId")}
+                        valueSelector={station => station.id}
+                        disabled={values.floorId == null}
                     />
                 </FlexView>
                 <FlexView grow>
                     <AsyncSelect 
                         floatingLabelText={t('INVENTORYGRID.LOCATION')}
-                        name="location"
-                        service={{
-                            isLoading: true,
-                            data: []
-                        }}
-                        onChange={() => {}}
+                        name="location_id"
+                        service={locations}
+                        onChange={(c) => this.updateValue("locationId", c)}
+                        valueSelector={location => location.id}
+                        disabled={values.stationId == null}
                     />
                 </FlexView>
             </FlexView>

@@ -20,6 +20,12 @@ export default (state = initialState, { type, payload }) => {
                     $set: true
                 }
             });
+        case AuthenticationNotifier.SET_LOGGED_OUT_STATE:
+            return update(state, {
+                loggedIn: {
+                    $set: false
+                }
+            });
         default: 
             return state;
     }

@@ -44,6 +44,7 @@ export default class ChooseDepartment extends Component {
                     onChange={this.onDepartmentSelected}
                     clearable={false}
                     searchable={false}
+                    value={selectedDepartment}
                 />
                 <RaisedButton 
                     label={t('CHOOSEDEPARTMENTBUTTON')}

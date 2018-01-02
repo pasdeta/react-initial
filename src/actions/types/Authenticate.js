@@ -5,4 +5,8 @@ const Login = (data, department) => ({
     payload: { data, department }
 });
 
-export default { Login };
+const Logout = () => ({
+    type: AuthenticationActions.Logout
+});
+
+export default { Login, Logout };

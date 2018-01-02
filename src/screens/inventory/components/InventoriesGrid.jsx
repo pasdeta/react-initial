@@ -42,7 +42,6 @@ export default class InventoriesGrid extends Component {
 
     localeGridText = (key, defaultValue) => {
         const { t } = this.props; 
-        //console.log(key, defaultValue);
 
         return defaultValue;
     }

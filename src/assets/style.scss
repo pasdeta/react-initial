@@ -53,3 +53,21 @@ input:-webkit-autofill {
 .react-datepicker-popper {
     z-index: 2;
 }
+
+.action-button {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+
+    span.button-title {
+        text-align: center;
+    }
+
+    &:hover {
+        background-color: aqua;
+    }
+
+    &:active {
+        background-color: red;
+    }
+}
