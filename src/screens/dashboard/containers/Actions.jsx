@@ -9,7 +9,25 @@ export default class Actions extends Component {
     render() {
 
         return (
-            <FlexView>
+            <FlexView wrap hAlignContent='center' vAlignContent='top'>
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
+                <ActionButton />
+                <FlexView  basis="10" />
                 <ActionButton />
             </FlexView>
         );

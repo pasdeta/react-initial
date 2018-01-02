@@ -57,7 +57,10 @@ class Form extends Component {
                         <LocationPicker 
                             values={{
                                 branchId: "60",
-                                buildingId: 2
+                                buildingId: 2,
+                                floorId: 5,
+                                stationId: 17,
+                                deviceLocationId: 231
                             }}
                         />
                     </FlexView>

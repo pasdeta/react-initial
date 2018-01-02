@@ -13,14 +13,20 @@ export default class LocationPicker extends Component {
     static propTypes = {
         values: PropTypes.shape({
             branchId: PropTypes.string,
-            buildingId: PropTypes.number
+            buildingId: PropTypes.number,
+            floorId: PropTypes.number,
+            stationId: PropTypes.number,
+            deviceLocationId: PropTypes.number,
         })
     }
 
     static defaultProps = {
         values: {
             branchId: null,
-            buildingId: null
+            buildingId: null,
+            floorId: null,
+            stationId: null,
+            deviceLocationId: null
         }
     }
 
@@ -31,6 +37,9 @@ export default class LocationPicker extends Component {
             values: {
                 branchId: null,
                 buildingId: null,
+                floorId: null,
+                stationId: null,
+                deviceLocationId: null
             },
             branches: {
                 isLoading: true,
@@ -48,7 +57,7 @@ export default class LocationPicker extends Component {
                 isLoading: true,
                 data: []
             },
-            locations: {
+            deviceLocations: {
                 isLoading: true,
                 data: []
             }
@@ -69,9 +78,35 @@ export default class LocationPicker extends Component {
         });
         if(values.branchId != null) {
             response = await Request.get('/buildings', { branch_id: values.branchId });
-            console.log("response", response)
             await this.setState({
                 buildings: {
+                    isLoading: false,
+                    data: response
+                }
+            });
+        }
+        if(values.floorId != null) {
+            response = await Request.get('/floors', { building_id: values.buildingId });
+            await this.setState({
+                floors: {
+                    isLoading: false,
+                    data: response
+                }
+            });
+        }
+        if(values.stationId != null) {
+            response = await Request.get('/stations', { floorId: values.floorId });
+            await this.setState({
+                stations: {
+                    isLoading: false,
+                    data: response
+                }
+            });
+        }
+        if(values.deviceLocationId != null) {
+            response = await Request.get('/devicelocations', { stationId: values.stationId});
+            await this.setState({
+                deviceLocations: {
                     isLoading: false,
                     data: response
                 }
@@ -80,7 +115,7 @@ export default class LocationPicker extends Component {
     }
 
     updateValue(key, value, ...clearKeys) {
-        console.log("update", key);
+        console.log("update value")
         let originalKey = {
             [key]: {
                 $set: value
@@ -103,8 +138,8 @@ export default class LocationPicker extends Component {
 
     render() {
         const { t } = this.props;
-        const { branches, buildings, floors, stations, locations, values } = this.state;
-        console.log("render building", buildings)
+        const { branches, buildings, floors, stations, deviceLocations, values } = this.state;
+
         return (
             <FlexView grow>
                 <FlexView grow>
@@ -125,8 +160,8 @@ export default class LocationPicker extends Component {
                         service={buildings}
                         value={values.buildingId}
                         onChange={(c) => this.updateValue("buildingId", c, "floorId", "stationId", "locationId")}
-                        disabled={values.branchId == null}
                         valueSelector={building => building.id}
+                        disabled={values.branchId == null}
                     />
                 </FlexView>
                 <FlexView basis="10" />
@@ -147,18 +182,21 @@ export default class LocationPicker extends Component {
                         floatingLabelText={t('INVENTORYGRID.STATION')}
                         name="station_id"
                         service={stations}
+                        value={values.stationId}
                         onChange={(c) => this.updateValue("stationId", c, "locationId")}
                         valueSelector={station => station.id}
                         disabled={values.floorId == null}
                     />
                 </FlexView>
+                <FlexView basis="10" />
                 <FlexView grow>
                     <AsyncSelect 
                         floatingLabelText={t('INVENTORYGRID.LOCATION')}
-                        name="location_id"
-                        service={locations}
-                        onChange={(c) => this.updateValue("locationId", c)}
-                        valueSelector={location => location.id}
+                        name="device_location_id"
+                        service={deviceLocations}
+                        value={values.deviceLocationId}
+                        onChange={(c) => this.updateValue("deviceLocationId", c)}
+                        valueSelector={deviceLocation => deviceLocation.id}
                         disabled={values.stationId == null}
                     />
                 </FlexView>

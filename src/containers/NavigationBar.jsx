@@ -60,6 +60,12 @@ class NavigationBar extends Component {
                     secondary={true}
                     icon={<FileFolder />}
                 />  
+                <NavFlatButton
+                    url="/inventories/12/history"
+                    label="Inventory Location History"
+                    secondary={true}
+                    icon={<FileFolder />}
+                />  
                 <FlexView grow />         
                 <FlatButton 
                     label={t('MENU.LOGOUT')} 

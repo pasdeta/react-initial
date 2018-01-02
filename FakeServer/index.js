@@ -107,6 +107,100 @@ server.get('/api/buildings', (req, res) => {
  });
 });
 
+server.get('/api/floors', (req, res) => {
+  res.json({  
+    "data":[  
+       {  
+          "id":5,
+          "name":"1. KAT"
+       },
+       {  
+          "id":6,
+          "name":"2. KAT"
+       },
+       {  
+          "id":7,
+          "name":"3. KAT"
+       },
+       {  
+          "id":8,
+          "name":"4. KAT"
+       }
+    ],
+    "errors":null,
+    "success":true,
+    "extras":null
+ });
+});
+
+server.get('/api/stations', (req, res) => {
+  res.json({  
+    "data":[  
+       {  
+          "id":17,
+          "name":"Ameliyathane"
+       },
+       {  
+          "id":20,
+          "name":"Bekleme Salonu"
+       },
+       {  
+          "id":19,
+          "name":"Yemekhane"
+       },
+       {  
+          "id":18,
+          "name":"Yoğun Bakım"
+       }
+    ],
+    "errors":null,
+    "success":true,
+    "extras":null
+ });
+});
+
+server.get('/api/devicelocations', (req, res) => {
+  res.json({  
+    "data":[  
+       {  
+          "id":243,
+          "name":"ANA HOL"
+       },
+       {  
+          "id":231,
+          "name":"Acil Giriş"
+       },
+       {  
+          "id":233,
+          "name":"Ambulans Giriş"
+       },
+       {  
+          "id":237,
+          "name":"Doktor Odası"
+       },
+       {  
+          "id":239,
+          "name":"Hemşire Odası"
+       },
+       {  
+          "id":229,
+          "name":"Muayenehane"
+       },
+       {  
+          "id":235,
+          "name":"Revir"
+       },
+       {  
+          "id":241,
+          "name":"YAN GİRİŞ"
+       }
+    ],
+    "errors":null,
+    "success":true,
+    "extras":null
+ });
+});
+
 
 
 server.listen(8090, () => {

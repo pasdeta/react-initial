@@ -13,6 +13,7 @@ export default class Summary extends Component {
                 <FlexView
                     className="make-it-card"
                     grow
+                    basis="0"
                 >
                     <Actions />
                 </FlexView>
@@ -20,6 +21,7 @@ export default class Summary extends Component {
                 <FlexView
                     className="make-it-card"
                     grow
+                    basis="0"
                 >
                     <Notifications />
                 </FlexView>

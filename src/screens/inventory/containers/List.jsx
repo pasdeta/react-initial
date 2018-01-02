@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import FlexView from 'react-flexview';
 
-
 import Request from '../../../services/Request';
-
 import InventoriesGrid from '../components/InventoriesGrid';
 import Search from '../components/Search';
 import Operations from '../components/Operations';
-
 
 export default class List extends Component {
 
