@@ -134,6 +134,7 @@ export default class InventoriesGrid extends Component {
                     colId="operation"
                     cellRendererFramework={this.renderOperationsCell}
                     pinned="right"
+                    width="1"
                 />
             </Grid>
         );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
+import InputMask from 'react-input-mask';
 import { default as DateSelect } from 'react-datepicker';
 import moment from 'moment';
 
@@ -63,7 +64,9 @@ export default class DatePicker extends Component {
                     <TextField
                         floatingLabelText={floatingLabelText}
                         hintText={format}
-                    /> 
+                    >
+                        <InputMask {...this.props} mask="99/99/9999" maskChar="_" />
+                    </TextField> 
                 }
                 onBlur={onBlur}
                 onFocus={onFocus}

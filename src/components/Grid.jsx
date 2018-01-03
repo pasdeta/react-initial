@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AgGridReact, AgGridColumn } from "ag-grid-react";
+import FlexView from 'react-flexview';
 
 export { AgGridColumn as Column };
 
@@ -83,16 +84,29 @@ export default class Grid extends Component {
     render() {
 
         return (
-            <div style={{
-                width: '100%'
-            }} className="ag-theme-material make-it-card no-padding">
-                <AgGridReact 
-                    {...this.props}
-                    onGridReady={this.onGridReady}
-                >
-                    { this.props.children }
-                </AgGridReact>
-            </div>
+            <FlexView column grow className="make-it-card no-padding">
+                <FlexView grow className="ag-theme-material">
+                    <div style={{ width: '100%' }}>
+                        <AgGridReact 
+                            {...this.props}
+                            onGridReady={this.onGridReady}
+                            pagination={false}
+                        >
+                            { this.props.children }
+                        </AgGridReact>
+                    </div>
+                </FlexView>
+                {
+                    this.props.pagination && 
+                    <FlexView 
+                        basis="45" 
+                        hAlignContent="right" 
+                        style={{ borderTop: '1px solid #e0e0e0'}}
+                    >
+                        
+                    </FlexView>
+                }
+            </FlexView>
         );
     }
 }
