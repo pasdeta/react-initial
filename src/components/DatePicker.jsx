@@ -65,7 +65,7 @@ export default class DatePicker extends Component {
                         floatingLabelText={floatingLabelText}
                         hintText={format}
                     >
-                        <InputMask {...this.props} mask="99/99/9999" maskChar="_" />
+                        <InputMask value={value} mask="99/99/9999" maskChar="_" />
                     </TextField> 
                 }
                 onBlur={onBlur}

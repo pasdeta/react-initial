@@ -42,23 +42,23 @@ export default class LocationPicker extends Component {
                 deviceLocationId: null
             },
             branches: {
-                isLoading: true,
+                isLoading: false,
                 data: []
             },
             buildings: {
-                isLoading: true,
+                isLoading: false,
                 data: []
             },
             floors: {
-                isLoading: true,
+                isLoading: false,
                 data: []
             },
             stations: {
-                isLoading: true,
+                isLoading: false,
                 data: []
             },
             deviceLocations: {
-                isLoading: true,
+                isLoading: false,
                 data: []
             }
         };
@@ -115,7 +115,6 @@ export default class LocationPicker extends Component {
     }
 
     updateValue(key, value, ...clearKeys) {
-        console.log("update value")
         let originalKey = {
             [key]: {
                 $set: value
@@ -133,7 +132,9 @@ export default class LocationPicker extends Component {
             ...clear
         });
 
-        this.setState({ values: newState });  
+        this.setState({ values: newState }, () => {
+            this.decideUpdateFields(key);
+        });
     }
 
     render() {
@@ -202,5 +203,92 @@ export default class LocationPicker extends Component {
                 </FlexView>
             </FlexView>
         );
+    }
+
+
+    decideUpdateFields(key) {
+
+        switch(key) {
+            case "branchId":
+                this.fetchBuildings();
+            break;
+            case "buildingId":
+                this.fetchFloors();
+            break;
+            case "floorId":
+                this.fetchStations();
+            break;
+            case "stationId":
+                this.fetchDeviceLocations();
+            break;
+        }
+    }
+
+    async fetchBuildings() {
+        const { values: { branchId } } = this.state;
+        await this.setState({
+            buildings: {
+                isLoading: true,
+                data: []
+            }
+        });
+        let response = await Request.get('/buildings', { branch_id: branchId });
+        await this.setState({
+            buildings: {
+                isLoading: false,
+                data: response
+            }
+        });
+    }
+
+    async fetchFloors() {
+        const { values: { buildingId } } = this.state;
+        await this.setState({
+            floors: {
+                isLoading: true,
+                data: []
+            }
+        });
+        let response = await Request.get('/floors', { building_id: buildingId });
+        await this.setState({
+            floors: {
+                isLoading: false,
+                data: response
+            }
+        });
+    }
+
+    async fetchStations() {
+        const { values: { floorId } } = this.state;
+        await this.setState({
+            stations: {
+                isLoading: true,
+                data: []
+            }
+        });
+        let response = await Request.get('/stations', { floor_id: floorId });
+        await this.setState({
+            stations: {
+                isLoading: false,
+                data: response
+            }
+        });
+    }
+
+    async fetchDeviceLocations() {
+        const { values: { stationId } } = this.state;
+        await this.setState({
+            deviceLocations: {
+                isLoading: true,
+                data: []
+            }
+        });
+        let response = await Request.get('/devicelocations', { station_id: stationId });
+        await this.setState({
+            deviceLocations: {
+                isLoading: false,
+                data: response
+            }
+        });
     }
 }

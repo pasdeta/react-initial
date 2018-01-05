@@ -11,29 +11,25 @@ export default class InventoryDetail extends Component {
         super(props);
 
         this.state = {
-            inventory: {
-                code: 'asdasda',
-                serialno: 'sadasdasd',
-                deviceclass:'dsavdsvg',
-                devicetype:'asdasfasd',
-                deviceorderinfotype:'asdasfasd',
-                devicestatustype:'asasdasf',
-                devicefeaturetype:'asfasdf'
-            }
+            inventory: null
         }
     }
-
 
     async componentDidMount() {
         let inventoryId = this.props.match.params.id;
         console.log(inventoryId);
-        let response  = await Request.get(`/inventories/${inventoryId}`);
-        console.log(response);
+        let response  = await Request.get(`/inventory/${inventoryId}`);
+        this.setState({ inventory: response });
+        console.log(response)
     }
 
     render() {
         const { t } = this.props;
         const { inventory } = this.state;
+
+        if(!inventory) {
+            return null;
+        }
 
         return (
             <FlexView column grow>
@@ -47,27 +43,27 @@ export default class InventoryDetail extends Component {
                                 </tr>
                                 <tr>
                                     <td>{t('INVENTORYGRID.SERIALNO')}</td>
-                                    <td>{inventory.serialno}</td>
+                                    <td>{inventory.serial_no}</td>
                                 </tr>
                                 <tr>
                                     <td>{t('INVENTORYGRID.DEVICECLASS')}</td>
-                                    <td>{inventory.deviceclass}</td>
+                                    <td>{inventory.device_class}</td>
                                 </tr>
                                 <tr>
                                     <td>{t('INVENTORYGRID.DEVICETYPE')}</td>
-                                    <td>{inventory.devicetype}</td>
+                                    <td>{inventory.device_type}</td>
                                 </tr>
                                 <tr>
                                     <td>{t('INVENTORYGRID.DEVICEORDERINFOTYPE')}</td>
-                                    <td>{inventory.deviceorderinfotype}</td>
+                                    <td>{inventory.order_info_type}</td>
                                 </tr>
                                 <tr>
                                     <td>{t('INVENTORYGRID.DEVICESTATUSTYPE')}</td>
-                                    <td>{inventory.devicestatustype}</td>
+                                    <td>{inventory.device_status}</td>
                                 </tr>
                                 <tr>
                                     <td>{t('INVENTORYGRID.DEVICEFEATURETYPE')}</td>
-                                    <td>{inventory.devicefeaturetype}</td>
+                                    <td>{inventory.device_feature_type}</td>
                                 </tr>
                             </tbody>
                         </table>

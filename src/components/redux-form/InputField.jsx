@@ -5,7 +5,7 @@ export default (props) => {
     const { 
         meta: { dirty, touched, error, warning, submitting }, 
         input, floatingLabelText, disabled, type,
-        maxLength
+        maxLength, style, onKeyPress
     } = props;
     
     return (
@@ -16,6 +16,8 @@ export default (props) => {
             errorText={(touched && error) ? error : null}
             disabled={disabled || submitting}
             maxLength={maxLength}
+            style={style}
+            onKeyPress={onKeyPress}
         />
     );  
 };

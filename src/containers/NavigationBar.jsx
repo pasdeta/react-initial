@@ -55,13 +55,13 @@ class NavigationBar extends Component {
                     icon={<FileFolder />}
                 />
                 <NavFlatButton
-                    url="/inventories/12"
+                    url="/inventories/470"
                     label="Inventory Detail"
                     secondary={true}
                     icon={<FileFolder />}
                 />  
                 <NavFlatButton
-                    url="/inventories/12/history"
+                    url="/inventories/470/history"
                     label="Inventory Location History"
                     secondary={true}
                     icon={<FileFolder />}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -9,6 +10,19 @@ import Grid, { Column } from "../../../components/Grid";
 
 @translate()
 export default class InventoriesGrid extends Component {
+
+    static propTypes = {
+        onSortChanged: PropTypes.func,
+        pageSize: PropTypes.number.isRequired,
+        onPageSizeChanged: PropTypes.func.isRequired,
+        onPageChanged: PropTypes.func.isRequired,
+        showLoading: PropTypes.bool
+    }
+
+    static defaultValue = {
+        onSortChanged: null,
+        showLoading: false
+    }
 
     onGridReady = (grid) => {
         this.grid = grid;
@@ -46,12 +60,34 @@ export default class InventoriesGrid extends Component {
         return defaultValue;
     }
 
+    handleSortChanged = (sortModels) => {
+        const { onSortChanged } = this.props;
+        if(!onSortChanged) { 
+            return; 
+        }
+        let model = [];
+        for(let sortModel of sortModels) {
+            model.push({
+                field: sortModel.colId,
+                dir: sortModel.sort
+            });
+        }
+        onSortChanged(model);
+    }
+
+    calculateCurrentPage = () => {
+        const { data: {page_count: pageCount, skip, page_size: pageSize, total} } = this.props;
+        const currentPage = Math.ceil(skip / pageSize) + 1;
+
+        return currentPage;
+    }
+
     render() {
-        const { t, data } = this.props;
+        const { t, data, pageSize, onPageSizeChanged, onPageChanged, showLoading } = this.props;
 
         return (
             <Grid
-                rowData={data}
+                data={data.data}
                 isLoading={false}
                 onReady={this.onGridReady}
                 suppressCellSelection
@@ -61,6 +97,16 @@ export default class InventoriesGrid extends Component {
                 autoSizePadding={20}
                 enableServerSideSorting
                 localeTextFunc={this.localeGridText}
+                suppressMovableColumns
+                suppressRowClickSelection
+                rowSelection="multiple"
+                onSortChanged={this.handleSortChanged}
+                pageSize={pageSize}
+                onPageSizeChanged={onPageSizeChanged}
+                pageCount={data.page_count}
+                currentPage={this.calculateCurrentPage()}
+                onPageChanged={onPageChanged}
+                showLoading={showLoading}
             >
                 <Column 
                     field="code"
@@ -73,9 +119,6 @@ export default class InventoriesGrid extends Component {
                 <Column 
                     field="device_sub_type"
                     headerName={t('INVENTORYGRID.DEVICESUBTYPE')}
-                    cellStyle={{
-                        minWidth: 200
-                    }}
                 />
                 <Column 
                     field="device_feature_type"
@@ -134,7 +177,17 @@ export default class InventoriesGrid extends Component {
                     colId="operation"
                     cellRendererFramework={this.renderOperationsCell}
                     pinned="right"
-                    width="1"
+                    suppressResize
+                />
+                <Column 
+                    colId="operation"
+                    pinned="left"
+                    suppressResize
+                    checkboxSelection
+                    suppressSorting
+                    suppressMovable
+                    suppressFilter
+                    suppressSizeToFit
                 />
             </Grid>
         );

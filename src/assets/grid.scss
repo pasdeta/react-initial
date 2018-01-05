@@ -4,3 +4,25 @@
 .ag-cell-no-focus {
     outline: none;
 }
+
+.ag-theme-material .ag-header-cell, .ag-theme-material .ag-header-group-cell {
+    padding-left: 10;
+    padding-right: 0;
+}
+
+.ag-theme-material .ag-header-cell-label {
+    justify-content: flex-start;
+}
+
+.ag-theme-material .ag-header-cell-label .ag-header-icon {
+    margin-left: 0;
+    position: absolute;
+    bottom: 1px;
+    right: 2px;
+}
+
+.grid-pagination-page-buttons-wrapper {
+    div {
+        min-width: auto;
+    }
+}

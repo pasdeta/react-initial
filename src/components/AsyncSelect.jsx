@@ -60,7 +60,8 @@ export default class AsyncSelect extends Component {
             (
                 this.props.service.isLoading && 
                 !nextProps.service.isLoading &&
-                nextProps.value
+                nextProps.value &&
+                nextProps.service.data
             )
         ) {
             
